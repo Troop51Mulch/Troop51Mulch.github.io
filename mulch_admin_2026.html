@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Mulch Orders — Troop 51</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1108;
+    --surface: #191c0e;
+    --surface2: #1f2313;
+    --border: #2e3318;
+    --accent: #b8e04a;
+    --accent2: #7dba1f;
+    --muted: #5a6140;
+    --text: #d8e4b0;
+    --text-dim: #8a9870;
+    --highlight: #b8e04a22;
+    --highlight-border: #b8e04a55;
+    --truck1: #4ab8e0;
+    --truck2: #e09a4a;
+    --truck3: #e04a8a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--accent);
+    padding: 24px 32px 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .brand-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: -.5px;
+    text-transform: uppercase;
+  }
+
+  h1 span { color: var(--accent); }
+
+  /* ── STATS BAR ── */
+  .stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    padding: 20px 32px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 240px;
+    max-width: 520px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 10px 14px 10px 40px;
+    outline: none;
+    transition: border-color .15s;
+  }
+
+  #search:focus { border-color: var(--accent); }
+  #search::placeholder { color: var(--muted); }
+
+  .filter-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f1108;
+  }
+
+  .filter-btn.truck1 { --t: var(--truck1); }
+  .filter-btn.truck1.active { background: var(--truck1); border-color: var(--truck1); }
+  .filter-btn.truck2 { --t: var(--truck2); }
+  .filter-btn.truck2.active { background: var(--truck2); border-color: var(--truck2); }
+  .filter-btn.truck3 { --t: var(--truck3); }
+  .filter-btn.truck3.active { background: var(--truck3); border-color: var(--truck3); }
+  .filter-btn.truck1:hover { border-color: var(--truck1); color: var(--truck1); }
+  .filter-btn.truck2:hover { border-color: var(--truck2); color: var(--truck2); }
+  .filter-btn.truck3:hover { border-color: var(--truck3); color: var(--truck3); }
+
+  #result-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ── TABLE WRAPPER ── */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 24px 32px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    border-bottom: 2px solid var(--accent);
+  }
+
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 8px 12px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+
+  th:hover { color: #fff; }
+
+  th .sort-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    opacity: .35;
+    font-size: 9px;
+  }
+
+  th.sort-asc .sort-arrow::after { content: '▲'; opacity: 1; }
+  th.sort-desc .sort-arrow::after { content: '▼'; opacity: 1; }
+  th:not(.sort-asc):not(.sort-desc) .sort-arrow::after { content: '⇅'; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+
+  tbody tr:hover { background: var(--highlight); }
+
+  tbody tr.hidden { display: none; }
+
+  td {
+    padding: 10px 12px;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  /* column specific */
+  .col-truck { white-space: nowrap; }
+
+  .truck-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1.5px solid;
+  }
+
+  .truck-1 { color: var(--truck1); border-color: var(--truck1); background: #4ab8e011; }
+  .truck-2 { color: var(--truck2); border-color: var(--truck2); background: #e09a4a11; }
+  .truck-3 { color: var(--truck3); border-color: var(--truck3); background: #e04a8a11; }
+
+  .col-order { font-family: 'DM Mono', monospace; color: var(--accent); font-size: 12px; }
+  .col-name { font-weight: 500; color: #fff; }
+  .col-bags {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: right;
+  }
+
+  .col-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .col-addr { color: var(--text-dim); max-width: 200px; }
+  .col-email { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); max-width: 180px; word-break: break-all; }
+  .col-comment { color: var(--text-dim); max-width: 280px; font-size: 12px; }
+  .col-run { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: center; }
+
+  .comment-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .comment-text.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+  }
+
+  mark {
+    background: var(--accent);
+    color: #0f1108;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 60px 0;
+    display: none;
+  }
+
+  .no-results.show { display: block; }
+
+  .no-results-icon { font-size: 40px; margin-bottom: 12px; }
+
+  .no-results p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 16px 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    header, .controls, .table-wrap { padding-left: 16px; padding-right: 16px; }
+    h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="brand-label">BSA Troop 51 · Herndon VA</span>
+    <h1>2026 Mulch <span>Orders</span></h1>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="stat-num" id="stat-orders">89</span><span class="stat-label">Orders</span></div>
+    <div class="stat"><span class="stat-num" id="stat-bags">—</span><span class="stat-label">Total Bags</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">Trucks</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="Search name, address, comment, order ID…" autocomplete="off" spellcheck="false">
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" data-truck="all">All</button>
+    <button class="filter-btn truck1" data-truck="Truck 1">Truck 1</button>
+    <button class="filter-btn truck2" data-truck="Truck 2">Truck 2</button>
+    <button class="filter-btn truck3" data-truck="Truck 3">Truck 3</button>
+  </div>
+  <span id="result-count"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="orders-table">
+    <thead>
+      <tr>
+        <th data-col="truck">Truck <span class="sort-arrow"></span></th>
+        <th data-col="run">Run <span class="sort-arrow"></span></th>
+        <th data-col="time">Time <span class="sort-arrow"></span></th>
+        <th data-col="order">Order # <span class="sort-arrow"></span></th>
+        <th data-col="name">Name <span class="sort-arrow"></span></th>
+        <th data-col="bags">Bags <span class="sort-arrow"></span></th>
+        <th data-col="address">Address <span class="sort-arrow"></span></th>
+        <th data-col="email">Email <span class="sort-arrow"></span></th>
+        <th data-col="comment">Delivery Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
+  <div class="no-results" id="no-results">
+    <div class="no-results-icon">🌱</div>
+    <p>No orders match your search</p>
+  </div>
+</div>
+
+<footer>Troop 51 BSA · 2026 Mulch Sale · <span id="footer-count"></span></footer>
+
+<script>
+const orders = [
+  
+  [
+    "Truck 1",
+    1,
+    2,
+    "cooper ridge drive",
+    6,
+    "Malcolm",
+    "Susan",
+    "2753 copper creek rd",
+    "2753 copper creek rd, Herndon, VA 20171",
+    "fivemalcolms@gmail.com",
+    "Please pull up into the driveway and stack bags on the left side of the drive at the top of the hill just before the walkway on the left.  Thank you so much!",
+    40
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "cooper ridge drive",
+    59,
+    "Neubauer",
+    "Joe",
+    "2758 copper creek rd",
+    "2758 copper creek rd, Herndon, VA 20171",
+    "jn3@verizon.net",
+    "Place mulch along flower bed in front of the bench to the left side of the driveway",
+    95
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "copper ridge drive",
+    69,
+    "Spargo",
+    "Judy",
+    "13513 copper ridge dr",
+    "13513 copper ridge dr, Herndon, VA 20171",
+    "jtackels@yahoo.com",
+    "Left side of driveway half way up",
+    50
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "copper ridge drive",
+    60,
+    "May",
+    "Scott",
+    "13511 copper ridge dr",
+    "13511 copper ridge dr, Herndon, VA 20171",
+    "scott.t.may@gmail.com",
+    "Please pull the truck up the driveway, and stack against the white fence at the end.  thanks!",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "bradley farm",
+    19,
+    "Stoner",
+    "Katherine",
+    "2852 bradley acres ct",
+    "2852 bradley acres ct, Herndon, VA 20171",
+    "stoner.katherine.swan@gmail.com",
+    "Please deliver along fence which is easily accessed from the street/end of our court. There are several sprinkler heads in this area, please avoid putting mulch directly on top of sprinkler heads. See photo below, arrows indicate where to put mulch.",
+    50
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "new parkland drive",
+    67,
+    "DREW",
+    "Terry",
+    "13168 new parkland dr",
+    "13168 new parkland dr, Herndon, VA 20171-3821",
+    "tritbd@gmail.com",
+    "please place bags when acing garage place on right side of driveway",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    2,
+    "new parkland drive",
+    74,
+    "Christoffersen",
+    "Mark",
+    "13110 frog hollow ct",
+    "13110 frog hollow ct, Herndon, VA 20171",
+    "christoffersenmark@yahoo.com",
+    "From the garage, please create stacks of five along right side of driveway.",
+    30
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "still pond",
+    3,
+    "Brown",
+    "Susan",
+    "3119 hannahs pond ln",
+    "3119 hannahs pond ln, Herndon, VA 20171",
+    "arnett123@aol.com",
+    "",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "turberville lane",
+    66,
+    "Simon",
+    "Michael",
+    "12810 cross creek ln",
+    "12810 cross creek ln, Herndon, VA 20171",
+    "michael.simon@me.com",
+    "Please stack on right side of driveway in front of where vehicle would be. Thank you",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "turberville lane",
+    31,
+    "Wolff",
+    "Larry",
+    "12809 turberville ln",
+    "12809 turberville ln, Herndon, VA 20171",
+    "larryw430@gmail.com",
+    "Left side of the driveway facing the house",
+    55
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "dower house drive",
+    14,
+    "Evans",
+    "Brian",
+    "3103 dower house dr",
+    "3103 dower house dr, Herndon, VA 20171",
+    "bnevansva@gmail.com",
+    "Just Past the driveway on right side of house...dirt patch with sign pointing you to the dirt patch of where to stack",
+    35
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "dower house drive",
+    52,
+    "Timberlake",
+    "James",
+    "3111 dower house dr",
+    "3111 dower house dr, Herndon, VA 20171",
+    "james.timberlake@gmail.com",
+    "Please stack mulch at top of driveway, in the right corner",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "nestlewood drive",
+    39,
+    "Smith",
+    "Mark",
+    "13111 bramblewood ln",
+    "13111 bramblewood ln, Herndon, VA 20171",
+    "msmith.scouts@gmail.com",
+    "Please stack along side garage.  See attached drawing.",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "thistlethorn drive",
+    22,
+    "Diehl",
+    "Mike",
+    "12979 thistlethorn dr",
+    "12979 thistlethorn dr, Herndon, VA 20171",
+    "mdiehl@gmail.com",
+    "",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "nestlewood drive",
+    37,
+    "Burke",
+    "Laurence",
+    "13117 bramblewood ln",
+    "13117 bramblewood ln, Herndon, VA 20171",
+    "luisaburke@verizon.net",
+    "driveway, near garage if possible",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "ashburton avenue",
+    71,
+    "Duwadi",
+    "Kiran",
+    "13007 bankfoot ct",
+    "13007 bankfoot ct, Herndon, VA 20171",
+    "ksduwadi@gmail.com",
+    "",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    9,
+    "ashburton avenue",
+    75,
+    "Chuang",
+    "Enoch",
+    "12900 harrington ct",
+    "12900 harrington ct, Herndon, VA 20171",
+    "chuang08@gmail.com",
+    "Please put the mulch on the right side in front of the garage.",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "point rider lane",
+    5,
+    "Venezia",
+    "Michele",
+    "2791 equus ct",
+    "2791 equus ct, Herndon, VA 20171",
+    "andrewmercer.am@gmail.com",
+    "",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "point rider lane",
+    17,
+    "Bergeron",
+    "Wanda",
+    "2796 equus ct",
+    "2796 equus ct, Herndon, VA 20171",
+    "wandabb89@icloud.com",
+    "Place mulch along the front sidewalk in front of the house",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "point rider lane",
+    36,
+    "McGuirt",
+    "Abigail",
+    "13337 point rider ln",
+    "13337 point rider ln, Herndon, VA 20171",
+    "abigailsink@yahoo.com",
+    "Back of house on left side, on grass near HVAC unit (heat pump)",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "monroe manor",
+    40,
+    "Quivey",
+    "Eric",
+    "12907 cedar glen lane",
+    "12907 cedar glen lane, Herndon, VA 20171",
+    "eric.quivey@gmail.com",
+    "Stack piles on the extreme right side of the driveway start close to the garage door.",
+    50
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "middleton farm lane",
+    57,
+    "Tseng",
+    "Susan",
+    "13243 middleton farm ln",
+    "13243 middleton farm ln, Herndon, VA 20171",
+    "shopping12@verizon.net",
+    "please stack the mulch on the left side of the driveway (as your looking at the garage doors). Thank you.",
+    50
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "middleton farm lane",
+    58,
+    "Tseng",
+    "Ming",
+    "13244 middleton farm ln",
+    "13244 middleton farm ln, Herndon, VA 20171",
+    "sthokie92@gmail.com",
+    "please stack the mulch on the grass on the right side of the driveway.  Thank you",
+    75
+  ],
+  [
+    "Truck 2",
+    2,
+    5,
+    "middleton farm lane",
+    10,
+    "Carbaugh",
+    "Mary",
+    "13308 horsepen woods ln",
+    "13308 horsepen woods ln, Herndon, VA 20171",
+    "marycarbaugh@yahoo.com",
+    "Please put the bags in the driveway",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    65,
+    "Poulsen",
+    "Keith",
+    "13315 scotsmore way",
+    "13315 scotsmore way, Herndon, VA 20171",
+    "keithpoulsen75@gmail.com",
+    "Stack mulch on right hand side of driveway.",
+    60
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    43,
+    "Lyon",
+    "Scott",
+    "13318 scotsmore way",
+    "13318 scotsmore way, Herndon, VA 20171",
+    "scott.lyon122@gmail.com",
+    "Stack in mulched area next to garage",
+    30
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circl",
+    68,
+    "Nguyen",
+    "Trai",
+    "13214 caroline ct",
+    "13214 caroline ct, Herndon, VA 20171",
+    "nguyenltr@gmail.com",
+    "Please stack bags on left side of the driveway (facing the street). Thanks.",
+    30
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circl",
+    23,
+    "Cummings",
+    "Sebastian",
+    "13222 caroline ct",
+    "13222 caroline ct, Herndon, VA 20171",
+    "jsebastianc10@gmail.com",
+    "Close to garage please",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    76,
+    "Reinsberg",
+    "Susan",
+    "3002 taylor makenzye ct",
+    "3002 taylor makenzye ct, Herndon, VA 20171",
+    "balmoral63@gmail.com",
+    "Please leave on far right side of the driveway, along edge of driveway on the tarp. Thank you.  Bill and Sue Reinsberg",
+    40
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    7,
+    "Gembarosky",
+    "Ron",
+    "3021 jeannie anna ct",
+    "3021 jeannie anna ct, Herndon, VA 20171",
+    "rgembarosky@msn.com",
+    "Stack mulch at curb",
+    50
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    87,
+    "Gangadhar",
+    "Selvathambi",
+    "13412 amy way",
+    "13412 amy way, Herndon, VA 20171",
+    "gsthambi@gmail.com",
+    "Do not deliver on the driveway; you can deliver right side of the house.",
+    35
+  ],
+  [
+    "Truck 1",
+    1,
+    6,
+    "kinross circle",
+    2,
+    "Arumugam",
+    "Bala",
+    "13404 amy way",
+    "13404 amy way, Herndon, VA 20171",
+    "jayabala1130@hotmail.com",
+    "deliver near to chimney on the mulch area not on the grass. See picture attached (This order was entered by troop51 on behalf of the customer)",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "monroe manor",
+    62,
+    "Robles",
+    "Maria",
+    "2470 sycamore lakes cove",
+    "2470 sycamore lakes cove, Herndon, VA 20171",
+    "mjrobles_2000@yahoo.com",
+    "Please put all the mulch by the grey Toyota Highlander on the right. Thank you!",
+    35
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "monroe manor",
+    41,
+    "Rakow",
+    "Leslie",
+    "12795 thacker hill ct",
+    "12795 thacker hill ct, Herndon, VA 20171",
+    "rakow.reg@gmail.com",
+    "Place bags in front of the garage doors, on the right hand side.",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "monroe manor",
+    82,
+    "Mathews",
+    "David",
+    "2508 fallon dr",
+    "2508 fallon dr, Herndon, VA 20171",
+    "sallymathews@cox.net",
+    "Please stack on brick path to the left of the garage",
+    60
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "mansway",
+    28,
+    "Wright",
+    "Andrew",
+    "2776 mansway dr",
+    "2776 mansway dr, Herndon, VA 20171",
+    "agavinwright@gmail.com",
+    "If not home, please delivery to right edge of the drive way (when facing the house).  if they are placed lengthwise we can get both cars out of our garage.  Thank you!",
+    40
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "melchester",
+    45,
+    "Htoon",
+    "Wynt",
+    "2778 melchester dr",
+    "2778 melchester dr, Herndon, VA 20171-2677",
+    "wynt2000@yahoo.com",
+    "Please place them on the right side of the house (mulch area) by the stone walk way leading up to the backyard.",
+    55
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "emerald chase drive",
+    51,
+    "Osborne",
+    "Elbert",
+    "13170 ruby lace ct",
+    "13170 ruby lace ct, Herndon, VA 20171",
+    "privatepilot@cox.net",
+    "Please stack at the far end of the paved driveway beside the garage. Thank you gentleman!",
+    30
+  ],
+  [
+    "Truck 1",
+    1,
+    4,
+    "emerald chase drive",
+    53,
+    "Stahl",
+    "Leanne",
+    "3027 emerald chase dr",
+    "3027 emerald chase dr, Herndon, VA 20171",
+    "stahlwrs@gmail.com",
+    "On right side of driveway",
+    35
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe manor",
+    20,
+    "Beaulieu",
+    "Bradley",
+    "2564 fox hound ct",
+    "2564 fox hound ct, Herndon, VA 20171",
+    "brad.be@ulieu.co",
+    "Please stack on left side of driveway in front of left garage door when looking at the house from the street.",
+    125
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe street",
+    70,
+    "GHATE",
+    "ADITI",
+    "2508 branding iron ct",
+    "2508 branding iron ct, Herndon, VA 20171-2947",
+    "aditi.rghate@gmail.com",
+    "Deliver on driveway away from the garage so car can backup.Make sure to not put mulch bags on the grass and stack it end of the driveway away from the house. Ring the doorbell to check with homeowners if you have any questions.",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe street",
+    8,
+    "Kirby",
+    "Martha",
+    "13125 curved iron rd",
+    "13125 curved iron rd, Herndon, VA 20171",
+    "marthainaus@gmail.com",
+    "Facing the front of the house, please place mulch bags in the drive way in front  of the right garage door (not in front of the left garage door). Thank you!",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe street",
+    89,
+    "Patel",
+    "Ketan",
+    "2510 silver spur ct",
+    "2510 silver spur ct, Herndon, VA 20171",
+    "patelk10@gmail.com",
+    "Place bags on right side of the porch",
+    50
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe street",
+    54,
+    "Mann",
+    "Bhupinder",
+    "2465 iron forge rd",
+    "2465 iron forge rd, Herndon, VA 20171",
+    "bjsingh78@gmail.com",
+    "Please Drop 16 bags at 2465 driveway and 14 next to 2467 driveway",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    3,
+    "monroe street",
+    9,
+    "Bui",
+    "Dan",
+    "2475 iron forge rd",
+    "2475 iron forge rd, Herndon, VA 20171",
+    "baltjack@gmail.com",
+    "As you face the front of the house, please stack the mulch in a single width line along the right side of the driveway.",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "lake shore drive",
+    30,
+    "Orlandi",
+    "Aaron",
+    "13459 lake shore dr",
+    "13459 lake shore dr, Herndon, VA 20171",
+    "aaron.orlandi88@gmail.com",
+    "Please stack on the left side of the driveway. In the past a single line of 8-10 stacks on the left edge of the driveway has worked well.",
+    60
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "lake shore drive",
+    25,
+    "Meritt",
+    "Jack",
+    "13405 running pump ct",
+    "13405 running pump ct, Herndon, VA 20171",
+    "jmeritt10@gmail.com",
+    "Stack along left edge of driveway if you are facing the house, so outside edge of driveway",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "lake shore drive",
+    46,
+    "Medina",
+    "Pablo",
+    "13407 running pump ct",
+    "13407 running pump ct, Herndon, VA 20171",
+    "pabloml88@gmail.com",
+    "Leave on driveway right side when facing the garage. Thank you",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "cooper ridge drive",
+    56,
+    "Mason",
+    "Chuck",
+    "2755 copper creek rd",
+    "2755 copper creek rd, Herndon, VA 20171",
+    "mmason96@aol.com",
+    "Left side of driveway under trees",
+    85
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "cooper ridge drive",
+    78,
+    "Manganelli",
+    "Dan",
+    "2713 copper creek rd",
+    "2713 copper creek rd, Herndon, VA 20171",
+    "danthemanganelli@gmail.com",
+    "Please Stack at back of driveway not blocking gate",
+    65
+  ],
+  [
+    "Truck 2",
+    2,
+    1,
+    "centreville rd",
+    44,
+    "Speer",
+    "John",
+    "2733 centreville rd",
+    "2733 centreville rd, Herndon, VA 20171",
+    "floris_knoll@hotmail.com",
+    "We are between the Montessori school and LDS church on Centreville Rd. White mailbox with a gate. Please call me so I can open the gate for the mulch truck. 703-625-2305. Last year support vehicles parked at the LDS church as I have another gate for scouts to walk through so they do not have to walk on Centreville Rd. Thanks",
+    40
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "rounding run circle",
+    84,
+    "Holecko",
+    "Joan",
+    "3236 rounding run ct",
+    "3236 rounding run ct, Herndon, VA 20171",
+    "joan.holecko@icloud.com",
+    "Please place on side of house, not driveway, next to garage. Thanks!",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    38,
+    "Anwarzai",
+    "Mustafa",
+    "13125 tuckaway dr",
+    "13125 tuckaway dr, Herndon, VA 20171",
+    "mostafa_anwarzai@yahoo.com",
+    "Hello,  please place bags on right side of driveway, next to garage, thank you so much.",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    4,
+    "Johnson",
+    "Peggy",
+    "13114 laneview ct",
+    "13114 laneview ct, Herndon, VA 20171",
+    "pamyers@cox.net",
+    "Hi,  Please knock loud on the front door when you arrive.  (If facing the house), Please stack on the right side of the driveway behind the 2013 BMW auto parked there. Stack right behind the BMW and Next to the Garage door, “BUT,”  please do not block the WALKWAY, leave space (between garage door and car) for a person to get to the front porch and door. You may even have to stack some/remainder at the front of the car. Thank you Peggy Johnson 703-599-4955 (please text if you need my help)",
+    80
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    18,
+    "Donaldson",
+    "Lynn",
+    "13143 tuckaway dr",
+    "13143 tuckaway dr, Oak Hill, VA 20171",
+    "jamesandlynn.donaldson@gmail.com",
+    "Put on the sides of the driveway",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "fern hollow",
+    72,
+    "Welton",
+    "Andy",
+    "3331 fern hollow place",
+    "3331 fern hollow place, Herndon, VA 20171",
+    "tawelton@gmail.com",
+    "Left side of driveway",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    47,
+    "Cornell",
+    "John",
+    "3346 fern hollow pl",
+    "3346 fern hollow pl, Herndon, VA 20171-3959",
+    "johnwc802@aol.com",
+    "Pls stack bags on the right side of the driveway, furthest from the street.",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    81,
+    "Xiao",
+    "Huiya",
+    "3323 fern hollow pl",
+    "3323 fern hollow pl, Herndon, VA 20171",
+    "jackxiao11@yahoo.com",
+    "Leave bags single files on the driver way, side near the house entrance",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    24,
+    "Ng",
+    "Michelle",
+    "13147 tuckaway dr",
+    "13147 tuckaway dr, Herndon, VA 20171",
+    "michelle.huneke17@gmail.com",
+    "Pile along the right side of the driveway when looking at the house from the street.",
+    55
+  ],
+  [
+    "Truck 2",
+    2,
+    10,
+    "tuckaway drive",
+    61,
+    "Russ",
+    "Denise",
+    "3307 bywater ct",
+    "3307 bywater ct, Herndon, VA 20171",
+    "ldjwruss@verizon.net",
+    "Please put in chalk outline at the turnaround at the bottom of the driveway. Thank you!",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "willow glen",
+    73,
+    "wiltse",
+    "Jeffrey",
+    "12823 willow glen ct",
+    "12823 willow glen ct, Herndon, VA 20171",
+    "jeffrey.wiltse@gmail.com",
+    "",
+    80
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "folkstone drive",
+    42,
+    "Spence",
+    "Karen",
+    "12347 folkstone dr",
+    "12347 folkstone dr, Herndon, VA 20171",
+    "elchuckler@gmail.com",
+    "Please stack on right side of driveway",
+    75
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "folkstone drive",
+    16,
+    "Henderson",
+    "Christy",
+    "2935 harvest glen ct",
+    "2935 harvest glen ct, Herndon, VA 20171",
+    "christy@cosmicinbox.com",
+    "Stack on right side of driveway.",
+    25
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "lawyers road",
+    83,
+    "Siva",
+    "Karthika",
+    "2714 robaleed way",
+    "2714 robaleed way, Herndon, VA 20171",
+    "karthikasiva@yahoo.com",
+    "Please leave bags along right side of the right hand side garage door.  Please don’t block the garage entry/exit.",
+    30
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "quincy adams",
+    34,
+    "Dohr",
+    "Bob",
+    "12563 quincy adams ct",
+    "12563 quincy adams ct, Herndon, VA 20171",
+    "robertdohr@hotmail.com",
+    "",
+    55
+  ],
+  [
+    "Truck 2",
+    2,
+    7,
+    "quincy adams",
+    35,
+    "Martin",
+    "Robert",
+    "12522 woodcock ln",
+    "12522 woodcock ln, Herndon, VA 20171",
+    "rskkgroup@gmail.com",
+    "Deliver to right side of driveway (looking at house from street)",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "franklin oaks",
+    11,
+    "Barna",
+    "Stephen",
+    "2952 ashdown forest dr",
+    "2952 ashdown forest dr, Herndon, VA 20171",
+    "sbarna@verizon.net",
+    "Please stack on the driveway pad to the right of the garage, leaving access to the gate.",
+    60
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "timber wood",
+    85,
+    "Brady",
+    "Ray",
+    "3026 franklin corner lane",
+    "3026 franklin corner lane, Herndon, VA 20171",
+    "albinbrady@gmail.com",
+    "Place on walkway to the side of garage.",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "timber wood",
+    55,
+    "Richards",
+    "Doug",
+    "12353 marionwood ct",
+    "12353 marionwood ct, Herndon, VA 20171",
+    "dougrich12@yahoo.com",
+    "Please drop the bags on the right side of the house as your looking from the road on the existing mulched area.  Thank you",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "myterra way",
+    33,
+    "Neuffer",
+    "John",
+    "12404 myterra way",
+    "12404 myterra way, Herndon, VA 20171",
+    "jneuffer@yahoo.com",
+    "Please stack in driveway per the attached JPEG photo",
+    80
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "myterra way",
+    50,
+    "PEIRCE",
+    "Bob",
+    "12403 macao ct",
+    "12403 macao ct, Herndon, VA 20171",
+    "bobpeirce1@gmail.com",
+    "Top of the driveway please.",
+    60
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "Viking drive",
+    64,
+    "Tippett",
+    "Paige",
+    "2613 claxton dr",
+    "2613 claxton dr, Herndon, VA 20171",
+    "bpm74@me.com",
+    "please place along left side of driveway (when facing house)",
+    25
+  ],
+  [
+    "Truck 1",
+    1,
+    8,
+    "magna carta road",
+    77,
+    "Hutnick",
+    "Robert",
+    "12604 magna carta road",
+    "12604 magna carta road, Herndon, VA 20171",
+    "bobhutnick@gmail.com",
+    "Please stack 35 bags on boards in driveway, 6 bags in 6 piles (one will have 5). I will also hopefully have my Honda CRV there and would like 10 bags placed in it for delivery three doors away to a neighbor at 12610 Magna Carta Road.  Thnks in advance.",
+    45
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "timber wood",
+    86,
+    "Lee",
+    "Joseph",
+    "3007 jonquilla ct",
+    "3007 jonquilla ct, OAK HILL, VA 20171",
+    "leehouse1@msn.com",
+    "Stack on straight edge of driveway, ie, left side facing our house.",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "timber wood",
+    79,
+    "Coleman",
+    "Samuel",
+    "3023 franklin corner ln",
+    "3023 franklin corner ln, Herndon, VA 20171",
+    "stcolemanone@gmail.com",
+    "Stack on side walkway from driveway back to back yard.",
+    50
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "timber wood",
+    80,
+    "Kimble",
+    "Abby",
+    "12355 marionwood ct",
+    "12355 marionwood ct, Herndon, VA 20171",
+    "akimble2@cox.net",
+    "Place in right side of the driveway by the garage door.",
+    50
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "new parkland drive",
+    13,
+    "Ross",
+    "Alexander",
+    "13106 new parkland dr",
+    "13106 new parkland dr, Herndon, VA 20171",
+    "aross97@gmail.com",
+    "",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "new parkland drive",
+    21,
+    "Goodwin",
+    "Sandra",
+    "12819 new parkland dr",
+    "12819 new parkland dr, Herndon, VA 20171",
+    "hahnesandy@gmail.com",
+    "Please stack along the far left side of the driveway, thank you",
+    45
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "monroe manor",
+    15,
+    "Hartman",
+    "Randy",
+    "12708 fox woods dr",
+    "12708 fox woods dr, Herndon, VA 20171",
+    "hartmanfamily4@outlook.com",
+    "Stack in bricked area on left side of house.",
+    45
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "floris lane",
+    1,
+    "Billodeaux",
+    "Ronnie",
+    "13422 alfred mill ct",
+    "13422 alfred mill ct, Herndon, VA 20171",
+    "rbillode@gmail.com",
+    "stack mulch on end of driveway near the tree  Payment 6.25 short at the time of entry",
+    35
+  ],
+  [
+    "Truck 3",
+    3,
+    11,
+    "copper ridge drive",
+    27,
+    "Goss",
+    "J",
+    "13506 copper ridge dr",
+    "13506 copper ridge dr, Herndon, VA 20171",
+    "jbethgoss@aol.com",
+    "driveway has large apron on west side, just above sidewalk",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "wrenn house",
+    12,
+    "Maytrott",
+    "Gerard",
+    "13213 wrenn house ln",
+    "13213 wrenn house ln, Herndon, VA 20171",
+    "maytrott@protonmail.com",
+    "Please place on the left edge of the driveway.",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "wrenn house",
+    32,
+    "Leonard",
+    "Chris",
+    "13215 wrenn house ln",
+    "13215 wrenn house ln, Herndon, VA 20171",
+    "chrisleonard55@gmail.com",
+    "",
+    50
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "tuckaway drive",
+    26,
+    "Sojka",
+    "Brian",
+    "13106 laneview ct",
+    "13106 laneview ct, Herndon, VA 20171",
+    "bsojka5202@aol.com",
+    "Delivery location is to the right of the driveway. Please stack 5-bags high, 9-stacks, (45 bags in total) following the semi-circle curve in the area near the fireplace. Please start close to the fence working your way towards the driveway. Orange cones will mark the area.",
+    45
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "willow glen",
+    48,
+    "Choi",
+    "Yong",
+    "12803 willow glen ct",
+    "12803 willow glen ct, Herndon, VA 20171",
+    "yonschoi@aol.com",
+    "",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "still pond",
+    29,
+    "Holstorm",
+    "Kathy",
+    "3132 hannahs pond ln",
+    "3132 hannahs pond ln, Herndon, VA 20171",
+    "kathyholstrom@gmail.com",
+    "Please place bags on driveway to theleft of the garage ( opp walkway to front door )",
+    50
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "oak farms drive",
+    88,
+    "Yang",
+    "Haihong",
+    "12800 owlsley way",
+    "12800 owlsley way, Herndon, VA 20171",
+    "haihong123@gmail.com",
+    "Place 20 bags on the side of bushes in the front door porch. Place 20 bags on the end of driveway adjacent to the basketball rack.",
+    40
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "ashburton avenue",
+    49,
+    "Humphrey",
+    "John",
+    "13008 bankfoot ct",
+    "13008 bankfoot ct, Herndon, VA 20171",
+    "jkhumphrey1115@gmail.com",
+    "Deliver and stack on the left side of the driveway",
+    50
+  ],
+  [
+    "Truck 3",
+    3,
+    12,
+    "franklin oaks",
+    63,
+    "Turner",
+    "Bill",
+    "12945 oak lawn pl",
+    "12945 oak lawn pl, Oak Hill, VA 20171",
+    "billturner75@gmail.com",
+    "Please put mulch on right side of driveway",
+    40
+  ]
+
+];
+
+const tbody = document.getElementById('tbody');
+const searchInput = document.getElementById('search');
+const noResults = document.getElementById('no-results');
+const resultCount = document.getElementById('result-count');
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+let currentTruck = 'all';
+let currentSearch = '';
+let sortCol = null;
+let sortDir = 1;
+
+// Compute totals
+const totalBags = orders.reduce((s, o) => s + o[11], 0);
+document.getElementById('stat-bags').textContent = totalBags.toLocaleString();
+document.getElementById('stat-orders').textContent = orders.length;
+document.getElementById('footer-count').textContent = `${orders.length} orders · ${totalBags.toLocaleString()} bags`;
+
+function truckClass(truck) {
+  if (truck === 'Truck 1') return 'truck-1';
+  if (truck === 'Truck 2') return 'truck-2';
+  return 'truck-3';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function highlight(text, query) {
+  if (!query) return escHtml(text);
+  const safe = escHtml(text);
+  const safeQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return safe.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark>$1</mark>');
+}
+
+function buildRows() {
+  const rows = [];
+  orders.forEach((o, i) => {
+    const [truck, runTruck, runNum, time, orderId, last, first, addr, city, email, comment, bags] = o;
+    const fullName = `${first} ${last}`;
+    const fullAddr = `${addr}, ${city}`;
+    const searchFields = [truck, String(runNum), time, String(orderId), last, first, fullName, addr, city, email, comment].join(' ').toLowerCase();
+
+    const tr = document.createElement('tr');
+    tr.dataset.truck = truck;
+    tr.dataset.search = searchFields;
+    tr.dataset.idx = i;
+
+    tr.innerHTML = `
+      <td class="col-truck"><span class="truck-badge ${truckClass(truck)}">${escHtml(truck)}</span></td>
+      <td class="col-run">${runNum}</td>
+      <td class="col-time">${escHtml(time)}</td>
+      <td class="col-order">#${orderId}</td>
+      <td class="col-name">${highlight(fullName, currentSearch)}</td>
+      <td class="col-bags">${bags}</td>
+      <td class="col-addr">${highlight(fullAddr, currentSearch)}</td>
+      <td class="col-email">${highlight(email, currentSearch)}</td>
+      <td class="col-comment"><div class="comment-text">${highlight(comment || '—', currentSearch)}</div></td>
+    `;
+
+    // expand comment on click
+    tr.querySelector('.comment-text').addEventListener('click', function() {
+      this.classList.toggle('expanded');
+    });
+
+    rows.push(tr);
+    tbody.appendChild(tr);
+  });
+  return rows;
+}
+
+let allRows = buildRows();
+
+function applyFilters() {
+  const q = currentSearch.toLowerCase().trim();
+  let visible = 0;
+
+  allRows.forEach(tr => {
+    const truckMatch = currentTruck === 'all' || tr.dataset.truck === currentTruck;
+    const searchMatch = !q || tr.dataset.search.includes(q);
+    const show = truckMatch && searchMatch;
+    tr.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+
+  // Re-highlight
+  if (q) {
+    allRows.forEach(tr => {
+      if (tr.classList.contains('hidden')) return;
+      const o = orders[tr.dataset.idx];
+      const [truck,,runNum,time,orderId,last,first,addr,city,email,comment,bags] = o;
+      const fullName = `${first} ${last}`;
+      const fullAddr = `${addr}, ${city}`;
+      tr.querySelector('.col-name').innerHTML = highlight(fullName, currentSearch);
+      tr.querySelector('.col-addr').innerHTML = highlight(fullAddr, currentSearch);
+      tr.querySelector('.col-email').innerHTML = highlight(email, currentSearch);
+      tr.querySelector('.comment-text').innerHTML = highlight(comment || '—', currentSearch);
+    });
+  } else {
+    allRows.forEach(tr => {
+      const o = orders[tr.dataset.idx];
+      const [,,,,orderId,last,first,addr,city,email,comment,bags] = o;
+      const fullName = `${first} ${last}`;
+      const fullAddr = `${addr}, ${city}`;
+      tr.querySelector('.col-name').textContent = fullName;
+      tr.querySelector('.col-addr').textContent = fullAddr;
+      tr.querySelector('.col-email').textContent = email;
+      tr.querySelector('.comment-text').textContent = comment || '—';
+    });
+  }
+
+  noResults.classList.toggle('show', visible === 0);
+  resultCount.textContent = `${visible} of ${orders.length} orders`;
+}
+
+searchInput.addEventListener('input', e => {
+  currentSearch = e.target.value;
+  applyFilters();
+});
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTruck = btn.dataset.truck;
+    applyFilters();
+  });
+});
+
+// Sorting
+document.querySelectorAll('th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    const colMap = { truck: 0, run: 2, time: 3, order: 4, name: 6, bags: 11, address: 7, email: 9 };
+    const idx = colMap[col];
+    if (idx === undefined) return;
+
+    if (sortCol === col) {
+      sortDir *= -1;
+    } else {
+      sortCol = col;
+      sortDir = 1;
+    }
+
+    document.querySelectorAll('th').forEach(t => t.classList.remove('sort-asc','sort-desc'));
+    th.classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+
+    const sorted = [...orders.map((o, i) => i)].sort((a, b) => {
+      let va = orders[a][idx];
+      let vb = orders[b][idx];
+      if (col === 'name') { va = `${orders[a][6]} ${orders[a][5]}`; vb = `${orders[b][6]} ${orders[b][5]}`; }
+      if (typeof va === 'number') return (va - vb) * sortDir;
+      return String(va).localeCompare(String(vb)) * sortDir;
+    });
+
+    sorted.forEach(i => tbody.appendChild(allRows[i]));
+    allRows = sorted.map(i => allRows.findIndex(r => parseInt(r.dataset.idx) === i)).map(i => allRows[i]);
+    // re-index
+    allRows = sorted.map(i => {
+      const r = tbody.querySelectorAll('tr')[sorted.indexOf(i)];
+      return r;
+    });
+    allRows = Array.from(tbody.querySelectorAll('tr'));
+    applyFilters();
+  });
+});
+
+// initial count
+resultCount.textContent = `${orders.length} of ${orders.length} orders`;
+</script>
+</body>
+</html>
