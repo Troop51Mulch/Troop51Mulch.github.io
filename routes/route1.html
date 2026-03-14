@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route 1 - Troop 51 Mulch Delivery 2026</title>
+    <title>Route 1 - Troop 51/Troop 7 Mulch Delivery 2026</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1 { color: #2c5aa0; }
@@ -31,15 +31,40 @@
         }
         .full-route-btn:hover { background: #008050; }
         .back-link { margin-top: 30px; }
+        .order-images { margin-top: 15px; }
+        .order-images h4 { 
+            color: #2c5aa0; 
+            font-size: 14px; 
+            margin-bottom: 10px; 
+        }
+        .order-image { 
+            max-width: 400px; 
+            max-height: 300px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            margin-bottom: 10px; 
+            display: block; 
+            cursor: pointer; 
+        }
+        .order-image:hover { 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+        }
         a { color: #0066cc; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .order-image { 
+                max-width: 100%; 
+                max-height: 250px; 
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Route 1</h1>
-    <h2>Truck 2</h2>
     <div class="directions-links">
-        <a href="https://www.google.com/maps/dir/?api=1&origin=13459+lake+shore+dr%2C+Herndon%2C+VA+20171&destination=2733+centreville+rd%2C+Herndon%2C+VA+20171&waypoints=13405+running+pump+ct%2C+Herndon%2C+VA+20171|13407+running+pump+ct%2C+Herndon%2C+VA+20171|2755+copper+creek+rd%2C+Herndon%2C+VA+20171|2713+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn full-route-btn" target="_blank">🗺️ View Complete Route Directions</a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=2713+copper+creek+rd%2C+Herndon%2C+VA+20171&waypoints=13459+lake+shore+dr%2C+Herndon%2C+VA+20171|13405+running+pump+ct%2C+Herndon%2C+VA+20171|13407+running+pump+ct%2C+Herndon%2C+VA+20171|2733+centreville+rd%2C+Herndon%2C+VA+20171|2755+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn full-route-btn" target="_blank">🗺️ Full Route </a>
     </div>
 
     <div class="order">
@@ -53,7 +78,7 @@
         </div>
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=13459+lake+shore+dr%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=13459+lake+shore+dr%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Get Directions</a>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=13459+lake+shore+dr%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from ODPC</a>
         </div>
     </div>
 
@@ -88,7 +113,26 @@
     </div>
 
     <div class="order">
-        <div class="order-header">Stop 4: Chuck Mason (85 bags)</div>
+        <div class="order-header">Stop 4: John Speer (40 bags)</div>
+        <div class="order-details">
+            <strong>Address:</strong> 2733 centreville rd, Herndon, VA 20171<br>
+            <strong>Email:</strong> floris_knoll@hotmail.com<br>
+            <strong>Order ID:</strong> 44<br>
+            <strong>Zone:</strong> 1-centreville rd<br>
+            <strong>Special Instructions:</strong> We are between the Montessori school and LDS church on Centreville Rd. White mailbox with a gate. Please call me so I can open the gate for the mulch truck. 703-625-2305. Last year support vehicles parked at the LDS church as I have another gate for scouts to walk through so they do not have to walk on Centreville Rd. Thanks<br>
+        </div>
+        <div class="order-images">
+            <h4>📷 Delivery Location Photos</h4>
+            <img src="https://troop51bsa.us/wp-content/uploads/wpforms/18956-f107eca704ad6c44a3236a4c01fa91f1/John-Speer-2733-Centreville-rd-e36c6d1fd815a1fee6adc45096103032.png" class="order-image" alt="Delivery location photo" onclick="window.open('https://troop51bsa.us/wp-content/uploads/wpforms/18956-f107eca704ad6c44a3236a4c01fa91f1/John-Speer-2733-Centreville-rd-e36c6d1fd815a1fee6adc45096103032.png', '_blank')">
+        </div>
+        <div class="directions-links">
+            <a href="https://www.google.com/maps/search/?api=1&query=2733+centreville+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=13407+running+pump+ct%2C+Herndon%2C+VA+20171&destination=2733+centreville+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from Previous Stop</a>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="order-header">Stop 5: Chuck Mason (85 bags)</div>
         <div class="order-details">
             <strong>Address:</strong> 2755 copper creek rd, Herndon, VA 20171<br>
             <strong>Email:</strong> mmason96@aol.com<br>
@@ -98,12 +142,12 @@
         </div>
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=2755+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=13407+running+pump+ct%2C+Herndon%2C+VA+20171&destination=2755+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from Previous Stop</a>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=2733+centreville+rd%2C+Herndon%2C+VA+20171&destination=2755+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from Previous Stop</a>
         </div>
     </div>
 
     <div class="order">
-        <div class="order-header">Stop 5: Dan Manganelli (65 bags)</div>
+        <div class="order-header">Stop 6: Dan Manganelli (65 bags)</div>
         <div class="order-details">
             <strong>Address:</strong> 2713 copper creek rd, Herndon, VA 20171<br>
             <strong>Email:</strong> danthemanganelli@gmail.com<br>
@@ -114,21 +158,6 @@
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=2713+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
             <a href="https://www.google.com/maps/dir/?api=1&origin=2755+copper+creek+rd%2C+Herndon%2C+VA+20171&destination=2713+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from Previous Stop</a>
-        </div>
-    </div>
-
-    <div class="order">
-        <div class="order-header">Stop 6: John Speer (40 bags)</div>
-        <div class="order-details">
-            <strong>Address:</strong> 2733 centreville rd, Herndon, VA 20171<br>
-            <strong>Email:</strong> floris_knoll@hotmail.com<br>
-            <strong>Order ID:</strong> 44<br>
-            <strong>Zone:</strong> 1-centreville rd<br>
-            <strong>Special Instructions:</strong> We are between the Montessori school and LDS church on Centreville Rd. White mailbox with a gate. Please call me so I can open the gate for the mulch truck. 703-625-2305. Last year support vehicles parked at the LDS church as I have another gate for scouts to walk through so they do not have to walk on Centreville Rd. Thanks<br>
-        </div>
-        <div class="directions-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=2733+centreville+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
-            <a href="https://www.google.com/maps/dir/?api=1&origin=2713+copper+creek+rd%2C+Herndon%2C+VA+20171&destination=2733+centreville+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from Previous Stop</a>
         </div>
     </div>
 
