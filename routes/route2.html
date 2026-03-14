@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route 2 - Troop 51 Mulch Delivery 2026</title>
+    <title>Route 2 - Troop 51/Troop 7 Mulch Delivery 2026</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1 { color: #2c5aa0; }
@@ -31,15 +31,40 @@
         }
         .full-route-btn:hover { background: #008050; }
         .back-link { margin-top: 30px; }
+        .order-images { margin-top: 15px; }
+        .order-images h4 { 
+            color: #2c5aa0; 
+            font-size: 14px; 
+            margin-bottom: 10px; 
+        }
+        .order-image { 
+            max-width: 400px; 
+            max-height: 300px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            margin-bottom: 10px; 
+            display: block; 
+            cursor: pointer; 
+        }
+        .order-image:hover { 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+        }
         a { color: #0066cc; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .order-image { 
+                max-width: 100%; 
+                max-height: 250px; 
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Route 2</h1>
-    <h2>Truck 1</h2>
     <div class="directions-links">
-        <a href="https://www.google.com/maps/dir/?api=1&origin=2753+copper+creek+rd%2C+Herndon%2C+VA+20171&destination=13110+frog+hollow+ct%2C+Herndon%2C+VA+20171&waypoints=2758+copper+creek+rd%2C+Herndon%2C+VA+20171|13513+copper+ridge+dr%2C+Herndon%2C+VA+20171|13511+copper+ridge+dr%2C+Herndon%2C+VA+20171|2852+bradley+acres+ct%2C+Herndon%2C+VA+20171|13168+new+parkland+dr%2C+Herndon%2C+VA+20171-3821" class="directions-btn full-route-btn" target="_blank">🗺️ View Complete Route Directions</a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=13110+frog+hollow+ct%2C+Herndon%2C+VA+20171&waypoints=2753+copper+creek+rd%2C+Herndon%2C+VA+20171|2758+copper+creek+rd%2C+Herndon%2C+VA+20171|13513+copper+ridge+dr%2C+Herndon%2C+VA+20171|13511+copper+ridge+dr%2C+Herndon%2C+VA+20171|2852+bradley+acres+ct%2C+Herndon%2C+VA+20171|13168+new+parkland+dr%2C+Herndon%2C+VA+20171-3821" class="directions-btn full-route-btn" target="_blank">🗺️ Full Route </a>
     </div>
 
     <div class="order">
@@ -53,7 +78,7 @@
         </div>
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=2753+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=2753+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Get Directions</a>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=2753+copper+creek+rd%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from ODPC</a>
         </div>
     </div>
 
@@ -110,6 +135,10 @@
             <strong>Order ID:</strong> 19<br>
             <strong>Zone:</strong> 1-bradley farm<br>
             <strong>Special Instructions:</strong> Please deliver along fence which is easily accessed from the street/end of our court. There are several sprinkler heads in this area, please avoid putting mulch directly on top of sprinkler heads. See photo below, arrows indicate where to put mulch.<br>
+        </div>
+        <div class="order-images">
+            <h4>📷 Delivery Location Photos</h4>
+            <img src="https://troop51bsa.us/wp-content/uploads/wpforms/18956-f107eca704ad6c44a3236a4c01fa91f1/IMG_1631-copy-5384068f00dad16121c6d68a406e7fdd.jpg" class="order-image" alt="Delivery location photo" onclick="window.open('https://troop51bsa.us/wp-content/uploads/wpforms/18956-f107eca704ad6c44a3236a4c01fa91f1/IMG_1631-copy-5384068f00dad16121c6d68a406e7fdd.jpg', '_blank')">
         </div>
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=2852+bradley+acres+ct%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
