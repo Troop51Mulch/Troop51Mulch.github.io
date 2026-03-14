@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route 6 - Troop 51 Mulch Delivery 2026</title>
+    <title>Route 6 - Troop 51/Troop 7 Mulch Delivery 2026</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1 { color: #2c5aa0; }
@@ -31,15 +31,40 @@
         }
         .full-route-btn:hover { background: #008050; }
         .back-link { margin-top: 30px; }
+        .order-images { margin-top: 15px; }
+        .order-images h4 { 
+            color: #2c5aa0; 
+            font-size: 14px; 
+            margin-bottom: 10px; 
+        }
+        .order-image { 
+            max-width: 400px; 
+            max-height: 300px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            margin-bottom: 10px; 
+            display: block; 
+            cursor: pointer; 
+        }
+        .order-image:hover { 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+        }
         a { color: #0066cc; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .order-image { 
+                max-width: 100%; 
+                max-height: 250px; 
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Route 6</h1>
-    <h2>Truck 1</h2>
     <div class="directions-links">
-        <a href="https://www.google.com/maps/dir/?api=1&origin=13315+scotsmore+way%2C+Herndon%2C+VA+20171&destination=13404+amy+way%2C+Herndon%2C+VA+20171&waypoints=13318+scotsmore+way%2C+Herndon%2C+VA+20171|13214+caroline+ct%2C+Herndon%2C+VA+20171|13222+caroline+ct%2C+Herndon%2C+VA+20171|3002+taylor+makenzye+ct%2C+Herndon%2C+VA+20171|3021+jeannie+anna+ct%2C+Herndon%2C+VA+20171|13412+amy+way%2C+Herndon%2C+VA+20171" class="directions-btn full-route-btn" target="_blank">🗺️ View Complete Route Directions</a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=13404+amy+way%2C+Herndon%2C+VA+20171&waypoints=13315+scotsmore+way%2C+Herndon%2C+VA+20171|13318+scotsmore+way%2C+Herndon%2C+VA+20171|13214+caroline+ct%2C+Herndon%2C+VA+20171|13222+caroline+ct%2C+Herndon%2C+VA+20171|3002+taylor+makenzye+ct%2C+Herndon%2C+VA+20171|3021+jeannie+anna+ct%2C+Herndon%2C+VA+20171|13412+amy+way%2C+Herndon%2C+VA+20171" class="directions-btn full-route-btn" target="_blank">🗺️ Full Route </a>
     </div>
 
     <div class="order">
@@ -53,7 +78,7 @@
         </div>
         <div class="directions-links">
             <a href="https://www.google.com/maps/search/?api=1&query=13315+scotsmore+way%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">📍 View Location</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=13315+scotsmore+way%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Get Directions</a>
+            <a href="https://www.google.com/maps/dir/?api=1&origin=3001+Centreville+Rd%2C+Herndon%2C+VA%2C+20171&destination=13315+scotsmore+way%2C+Herndon%2C+VA+20171" class="directions-btn" target="_blank">🧭 Directions from ODPC</a>
         </div>
     </div>
 
