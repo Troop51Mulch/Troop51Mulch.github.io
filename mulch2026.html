@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troop 51 Mulch Day - Volunteer Information</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        /* Tab Navigation */
+        .tab-navigation {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .tab-nav li {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .tab-nav a {
+            display: block;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-right: 1px solid #eee;
+            position: relative;
+        }
+        
+        .tab-nav li:last-child a {
+            border-right: none;
+        }
+        
+        .tab-nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-nav a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .tab-nav .icon {
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .tab-nav .label {
+            display: block;
+            font-size: 0.9em;
+        }
+        
+        /* Quick Links Section */
+        .quick-links {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .quick-links-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .quick-links-content {
+            padding: 30px;
+        }
+        
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .quick-link-card {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background: #667eea;
+            color: white;
+        }
+        
+        .quick-link-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .quick-link-card .title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .quick-link-card .description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .checklist {
+            list-style: none;
+            counter-reset: checklist-counter;
+        }
+        
+        .checklist li {
+            counter-increment: checklist-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+            font-size: 1.1em;
+        }
+        
+        .checklist li::before {
+            content: counter(checklist-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .whatsapp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .whatsapp-card {
+            background: #f8f9fa;
+            border: 2px solid #25d366;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .whatsapp-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .whatsapp-card h3 {
+            color: #25d366;
+            margin-bottom: 15px;
+        }
+        
+        .whatsapp-card a {
+            display: inline-block;
+            background: #25d366;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .whatsapp-card a:hover {
+            background: #128c7e;
+        }
+        
+        .roster-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .roster-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .safety-item {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .routes-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 20px 0;
+            transition: background 0.3s ease;
+        }
+        
+        .routes-link:hover {
+            background: #764ba2;
+        }
+        
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .tab-nav {
+                flex-direction: column;
+            }
+            
+            .tab-nav li {
+                min-width: auto;
+            }
+            
+            .tab-nav a {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .checklist li {
+                padding-left: 40px;
+                font-size: 1em;
+            }
+            
+            .whatsapp-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .roster-image {
+                border-radius: 5px;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚚 Troop 51 Mulch Day</h1>
+            <p class="subtitle">Volunteer Information & Instructions</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <ul class="tab-nav">
+                <li><a href="#checklist" class="tab-link active"><span class="icon">📋</span><span class="label">Checklist</span></a></li>
+                <li><a href="#routes" class="tab-link"><span class="icon">🗺️</span><span class="label">Routes</span></a></li>
+                <li><a href="#roster" class="tab-link"><span class="icon">🚛</span><span class="label">Roster</span></a></li>
+                <li><a href="#whatsapp" class="tab-link"><span class="icon">📱</span><span class="label">WhatsApp</span></a></li>
+                <li><a href="#safety" class="tab-link"><span class="icon">⚠️</span><span class="label">Safety</span></a></li>
+            </ul>
+        </nav>
+
+        <section class="section" id="checklist">
+            <div class="section-header">📋 Arrival Checklist</div>
+            <div class="section-content">
+                <ol class="checklist">
+                    <li>Thank you for showing up!</li>
+                    <li>⌚ <strong>AFTER you arrive</strong> Record your Attendance using the QR code available ON SITE and sign out when you leave.</li>
+                    <li>You have been assigned a truck number. See below for your assignment. Stick to the assignment. If you don't see your name don't worry, email me or come find me Saturday. Apologies if this was missed.</li>
+                    <li>Gather, say hello, grab some donuts and coffee and stretch.</li>
+                    <li>We will announce when it's time to saddle up and gather in your Truck Zone and then you are off to the races.</li>
+                    <li>We want to make sure that the scout drivers stick with the truck and help shuttle scouts from one drop to another. We are in need of drivers to take MORE than just one scout. Please help and keep your group together.</li>
+                    
+                </ol>
+            </div>
+        </section>
+<section class="section" id="whatsapp">
+    <strong>WhatsApp Groups</strong> - We are going to use WhatsApp Groups For Volunteer Communication and Coordination for the mulch day. Please go ahead and join the appropriate groups for this year from below based on the truck assignment below. Truck Drivers and Navigators can use live location tracking and post pictures of deliveries and mulch leaders can post updates during the day for things like food or announcements.
+                        <div class="whatsapp-grid">
+                            <div class="whatsapp-card">
+                                <h3>📱 All Volunteers</h3>
+                                <p><em>(All Volunteers join this group)</em></p>
+                                <a href="https://chat.whatsapp.com/CXE4Du6RRkfGG6NPEdekEb" target="_blank">Join Group</a>
+                            </div>
+                            <div class="whatsapp-card">
+                                <h3>🚛 Truck 1</h3>
+                                <p><em>Drivers and Volunteers</em></p>
+                                <a href="https://chat.whatsapp.com/LY4xbAvZBlYBSQQ15gj5ZX" target="_blank">Join Group</a>
+                            </div>
+                            <div class="whatsapp-card">
+                                <h3>🚛 Truck 2</h3>
+                                <p><em>Drivers and Volunteers</em></p>
+                                <a href="https://chat.whatsapp.com/FJCH0oyDyZW83DPMmB03X1" target="_blank">Join Group</a>
+                            </div>
+                            <div class="whatsapp-card">
+                                <h3>🚛 Truck 3</h3>
+                                <p><em>Pickup Driver and Volunteers</em></p>
+                                <a href="https://chat.whatsapp.com/IcEnlYViCNfF4kfpI0H2lA" target="_blank">Join Group</a>
+                            </div>
+                            <div class="whatsapp-card">
+                                <h3>🍕 Food Volunteers</h3>
+                                <p><em>Food coordination</em></p>
+                                <a href="https://chat.whatsapp.com/Hfn37OcIsM3CDcqDd4vn3W" target="_blank">Join Group</a>
+                            </div>
+                        </div>
+</section>
+        <section class="section" id="roster">
+            <div class="section-header">🚚 Truck Assignments</div>
+            <div class="section-content">
+                <p><strong>Note:</strong> <span class="highlight">Blue indicates Partial Day</span></p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="roster.png" alt="Truck Roster 2026" class="roster-image">
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-style: italic;">
+                    Please find your assigned truck number above and stick to your assignment. 
+                    If you don't see your name, email me or find me on Saturday.
+                </p>
+            </div>
+        </section>
+        <section class="section" id="routes">                     
+            <div>See Truck Routes: <a href="https://troop51mulch.github.io/allRoutes-tab.html" class="routes-link" target="_blank">🗺️ View Truck Routes</a></div>
+</section>
+
+        <section class="section" id="safety">
+            <div class="section-header">⚠️ Safety & Reminders</div>
+            <div class="section-content">
+                <div class="safety-item">
+                    <strong>🚗 Parking Awareness:</strong> We are sharing a parking lot with a daycare at the church. Please be mindful of that as parents are dropping off kids.
+                </div>
+                <div class="safety-item">
+                    <strong>🚐 Scout Transportation:</strong> We have some scout parents signed up for scout transportation, but we need more help. If you can assist, please reach out to me.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Tab navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all tabs
+                    tabLinks.forEach(tab => tab.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Smooth scroll to target section
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Update active tab on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const observerOptions = {
+                root: null,
+                rootMargin: '-50% 0px -50% 0px',
+                threshold: 0
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const targetId = entry.target.getAttribute('id');
+                        tabLinks.forEach(tab => {
+                            tab.classList.remove('active');
+                            if (tab.getAttribute('href') === '#' + targetId) {
+                                tab.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
